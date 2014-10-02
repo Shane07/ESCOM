@@ -1,0 +1,361 @@
+// VALORES HEXADECIMALES IMPRIMIR CON 0xYYYYY, ADD ICMP
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.io.*;
+
+import org.jnetpcap.*;
+import org.jnetpcap.PcapIf;
+import org.jnetpcap.packet.*;
+import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.PcapBpfProgram;
+import org.jnetpcap.protocol.lan.*;
+import org.jnetpcap.protocol.tcpip.*;
+import org.jnetpcap.protocol.network.*;
+import org.jnetpcap.nio.*;
+import org.jnetpcap.packet.*;
+import org.jnetpcap.protocol.network.*;
+import org.jnetpcap.protocol.lan.IEEE802dot2;
+import org.jnetpcap.protocol.lan.IEEE802dot3;
+
+//import 
+
+// Compilar y ejecutar como root
+
+public class JNetpcap
+{
+	//Document documento;
+	//PdfWriter docPDF;
+
+	public JNetpcap(int cantidadTramas)
+	{
+		corePcap(cantidadTramas, null);
+	}
+	public JNetpcap(String archivo)
+	{
+		corePcap(666, archivo);
+	}
+    private static String asString(final byte[] mac)
+    {
+        final StringBuilder buf = new StringBuilder();
+        for (byte b : mac)
+        {
+            if (buf.length() != 0)
+            {
+                buf.append(':');
+            }
+            if (b >= 0 && b < 16)
+            {
+                buf.append('0');
+            }
+            
+            buf.append(Integer.toHexString((b < 0) ? b + 256 : b).toUpperCase());
+        }
+        return buf.toString();
+    }
+
+    public void corePcap(int cant, String ficheroTramas)
+    {
+        // Borrar el analisis anterior
+        try
+        {
+            if(new File("analisis").delete())
+                System.out.println("Archivo anterior borrado");
+        }
+        catch(Exception x)
+        {
+            System.err.println(x.getMessage());
+        }
+
+        List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs
+        StringBuilder errbuf = new StringBuilder(); // For any error msgs
+
+        /***************************************************************************
+         * First get a list of devices on this system
+         **************************************************************************/
+        int r = Pcap.findAllDevs(alldevs, errbuf);
+        
+        if(r == Pcap.NOT_OK || alldevs.isEmpty())
+        {
+            System.err.printf("Can't read list of devices, error is %s", errbuf.toString());
+            return;
+        }
+
+        System.out.println("Network devices found:");
+
+        int i = 0;
+        
+        try
+        {
+            for(PcapIf device : alldevs) 
+            {
+                String description = (device.getDescription() != null) ? device.getDescription(): "No description available";
+                final byte[] mac = device.getHardwareAddress();
+                String dir_mac = (mac==null)?"No tiene direccion MAC":asString(mac);
+                System.out.printf("#%d: %s [%s] MAC:[%s]\n", i++, device.getName(), description, dir_mac);
+            }
+
+            PcapIf device = alldevs.get(2); // We know we have atleast 1 device
+            System.out.printf("\nChoosing '%s' on your behalf:\n", (device.getDescription() != null) ? device.getDescription(): device.getName());
+
+            /***************************************************************************
+             * Second we open up the selected device
+             **************************************************************************/
+            /*"snaplen" is short for 'snapshot length', as it refers to the amount of actual data captured from each packet passing through the specified network interface.
+            64*1024 = 65536 bytes; campo len en Ethernet(16 bits) tam máx de trama */
+
+            int snaplen = 64 * 1024;           // Capture all packets, no trucation
+            int flags = Pcap.MODE_PROMISCUOUS; // capture all packets
+            int timeout = cant * 1000;           // 10 seconds in millis
+
+            Pcap pcap = null;
+
+            if(ficheroTramas == null)
+            	pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
+            else if(ficheroTramas != null)
+            	pcap = Pcap.openOffline(ficheroTramas, errbuf); //Pcap.openOffline(f.getAbsolutePath(), errbuf);
+
+            if (pcap == null)
+            {
+                System.err.printf("Error while opening device for capture: " + errbuf.toString());
+                return;
+            }
+
+            /********F I L T R O********/
+            PcapBpfProgram filter = new PcapBpfProgram();
+            String expression =""; // "port 80";
+            int optimize = 0; // 1 means true, 0 means false
+            int netmask = 0;
+            int r2 = pcap.compile(filter, expression, optimize, netmask);
+            if (r2 != Pcap.OK)
+            {
+                System.out.println("Filter error: " + pcap.getErr());
+            }
+            pcap.setFilter(filter);
+             /****************/
+
+
+            /***************************************************************************
+             * Third we create a packet handler which will receive packets from the
+             * libpcap loop.
+             **********************************************************************/
+            PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>()
+            {
+                public void nextPacket(PcapPacket packet, String user)
+                {
+                    System.out.println("Inicio trama");
+                    System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",new Date(packet.getCaptureHeader().timestampInMillis()),
+                        packet.getCaptureHeader().caplen(),  // Length actually captured
+                        packet.getCaptureHeader().wirelen(), // Original length
+                        user                                 // User supplied object
+                    );
+
+
+                    try
+                    {
+                        PrintWriter analisis  = new PrintWriter(new FileOutputStream("analisis", true));
+                        boolean ieee = false;
+
+                        /******Desencapsulado ********/
+                        for(int i=0;i<packet.size();i++)
+                        {
+                            if(i == 0)
+                                if(packet.getUByte(12)*256 + packet.getUByte(13) < 1500)
+                                {
+                                    analisis.printf("Trama IEEE 802.3\n");
+                                    ieee = true;
+                                }
+                                else
+                                    analisis.printf("Trama Ethernet\n");
+                            if(i < 6)
+                                if(i == 0)
+                                    analisis.printf("\tMAC destino: %02X:", packet.getUByte(i));
+                                else if(i == 5)
+                                    analisis.printf("%02X\n", packet.getUByte(i));
+                                else
+                                    analisis.printf("%02X:", packet.getUByte(i));
+                            else if(i < 12)
+                                if(i == 6)
+                                    analisis.printf("\tMAC origen: %02X:", packet.getUByte(i));
+                                else if(i == 11)
+                                    analisis.printf("%02X\n", packet.getUByte(i));
+                                else
+                                    analisis.printf("%02X:", packet.getUByte(i));
+                            else if(i == 12 && ieee == true)
+                            {
+                                int a = packet.getUByte(i);
+                                int b = packet.getUByte(i+1);
+                                int d = (a<<8) | b;
+                                analisis.printf("\tTamaño: %d bytes\n", d);
+                                analizarLLC(analisis, packet, d);
+                            }
+                            else if(i == 12 && ieee == false)
+                            {
+                                int a = packet.getUByte(i);
+                                int b = packet.getUByte(i+1);
+                                int d = (a<<8) | b;
+                                analisis.printf("\tTipo: %s\n", (d == 2048)? "DOD IP": ((d == 2054)? "ARP": "no_se_cual_xDD"));
+
+                                if(d == 2048)
+                                    analizarIP(analisis, packet);
+                                else if(d == 2054)
+                                    analizarARP(analisis, packet);
+                            }
+
+                            System.out.printf("%02X ",packet.getUByte(i));
+                            if(i%16==15)
+                                System.out.println();
+                        }
+                        analisis.printf("\n");
+                        analisis.close();
+                    }
+                    catch(FileNotFoundException x)
+                    {
+                        System.err.println(x.getMessage());
+                    }
+
+                    
+                    // Mostrar trama like Wireshark
+                    System.out.println("\n\nEncabezado: \n"+ packet.toHexdump());
+                }
+            };
+
+
+            /***************************************************************************
+             * Fourth we enter the loop and tell it to capture 10 packets. The loop
+             * method does a mapping of pcap.datalink() DLT value to JProtocol ID, which
+             * is needed by JScanner. The scanner scans the packet buffer and decodes
+             * the headers. The mapping is done automatically, although a variation on
+             * the loop method exists that allows the programmer to sepecify exactly
+             * which protocol ID to use as the data link type for this pcap interface.
+             **************************************************************************/
+            pcap.loop(10, jpacketHandler, "jNetPcap rocks!");
+
+            /***************************************************************************
+             * Last thing to do is close the pcap handle
+             **************************************************************************/
+            pcap.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    static void analizarIP(PrintWriter a, PcapPacket p)
+    {
+        a.printf("\tVersion: %d\n", (p.getUByte(14)>>>4)); // '>>>' para desplazar sin considerar el signo ('>>' deja intacto el bit de signo)
+        a.printf("\tLongitud: %d\n", (p.getUByte(14)&15));
+        a.printf("\tTipo de servicio: %d\n", p.getUByte(15));
+        a.printf("\tLongitud total: %d\n", (p.getUByte(16)<<8 | p.getUByte(17)));
+        a.printf("\tIdentificacion: %d\n", (p.getUByte(18)<<8 | p.getUByte(19)));
+        a.printf("\tFlags: %d\n", p.getUByte(20)>>>4); // CORREGIR FLAGS Y ADD BANDERAS
+        a.printf("\tOffset de fragmento: %d\n", ((p.getUByte(20)&15)<<8)|p.getUByte(21));
+        a.printf("\tTTL: %d\n", p.getUByte(22));
+        a.printf("\tProtocolo: %d = %s\n", p.getUByte(23), (p.getUByte(23) == 0x06)? "TCP": ((p.getUByte(23) == 0x11)? "UDP": "otro_xD")); // Determina si la trama es TCP, UDP, ICMP, etc (IANA Protocol Number IP)
+        a.printf("\tComprobacion de cabecera: %02X\n", (p.getUByte(24)<<8 | p.getUByte(25)));
+        a.printf("\tDireccion IP origen: %d.%d.%d.%d\n", p.getUByte(26), p.getUByte(27), p.getUByte(28), p.getUByte(29));
+        a.printf("\tDireccion IP destino: %d.%d.%d.%d\n", p.getUByte(30), p.getUByte(31), p.getUByte(32), p.getUByte(33));
+
+        if(p.getUByte(23) == 0x06)
+            analizarTCP(a, p);
+        else if(p.getUByte(23) == 0x11)
+            analizarUDP(a, p);
+    }
+    static void analizarTCP(PrintWriter a, PcapPacket p)
+    {
+        long tmp;
+        a.printf("\n\tAnalisis TCP\n");
+        a.printf("\tPuerto de origen: %d\n", (p.getUByte(34)<<8 | p.getUByte(35)));
+        a.printf("\tPuerto de destino: %d\n", (p.getUByte(36)<<8 | p.getUByte(37)));
+        tmp = p.getUByte(38)<<24 | p.getUByte(39)<<16 | p.getUByte(40)<<8 | p.getUByte(41);
+        a.printf("\tNumero de secuencia: %d\n", tmp);
+        tmp = p.getUByte(42)<<24 | p.getUByte(43)<<16 | p.getUByte(44)<<8 | p.getUByte(45);
+        a.printf("\tNumero de ACK: %d\n", tmp);
+        a.printf("\tLongitud de cabecera: %d\n", p.getUByte(46)>>>4);
+        a.printf("\tReservado: %d\n", (p.getUByte(46)>>>1)&7);
+        a.printf("\tFlags: %d\n", p.getUByte(47)); // AÑADIR ACK, PSH, FIN, etc.
+        a.printf("\tTamaño de ventana: %d\n", (p.getUByte(48)<<8)|p.getUByte(49));
+        a.printf("\tChecksum: %d\n", (p.getUByte(50)<<8)|p.getUByte(51));
+        a.printf("\tPuntero urgente: %d\n", (p.getUByte(52)<<8)|p.getUByte(53));
+    }
+    static void analizarUDP(PrintWriter a, PcapPacket p)
+    {
+        a.printf("\n\tAnalisis UDP\n");
+        a.printf("\tPuerto de origen: %d\n", (p.getUByte(34)<<8 | p.getUByte(35)));
+        a.printf("\tPuerto de destino: %d\n", (p.getUByte(36)<<8 | p.getUByte(37)));
+        a.printf("\tLongitud del mensaje: %d\n", (p.getUByte(38)<<8 | p.getUByte(39)));
+        a.printf("\tChecksum: %d\n", (p.getUByte(40)<<8 | p.getUByte(41)));
+    }
+    static void analizarARP(PrintWriter a, PcapPacket p)
+    {
+        a.printf("\n\tAnalisis ARP\n");
+        a.printf("\tTipo de hardware: %d\n", (p.getUByte(14)<<8 | p.getUByte(15)));
+        a.printf("\tTipo de protocolo: %d\n", (p.getUByte(16)<<8 | p.getUByte(17)));
+        a.printf("\tLongitud de direccion de hardware: %d\n", p.getUByte(18));
+        a.printf("\tLongitud de direccion de protocolo: %d\n", p.getUByte(19));
+        a.printf("\tOpcode: %d\n", (p.getUByte(20)<<8 | p.getUByte(21)));
+        a.printf("\tDireccion de hardware del emisor: %02X:%02X:%02X:%02X:%02X:%02X\n", p.getUByte(22), p.getUByte(23), p.getUByte(24), p.getUByte(25), p.getUByte(26), p.getUByte(27));
+        a.printf("\tDireccion de protocolo del emisor: %d.%d.%d.%d\n", p.getUByte(28), p.getUByte(29), p.getUByte(30), p.getUByte(31));
+        a.printf("\tDireccion de hardware del receptor: %02X:%02X:%02X:%02X:%02X:%02X\n", p.getUByte(32), p.getUByte(33), p.getUByte(34), p.getUByte(35), p.getUByte(36), p.getUByte(37));
+        a.printf("\tDireccion de protocolo del receptor: %d.%d.%d.%d\n", p.getUByte(38), p.getUByte(39), p.getUByte(40), p.getUByte(41));
+    }
+    static void analizarLLC(PrintWriter a, PcapPacket p, int d)
+    {
+        if(d == 3)
+            a.printf("\tCampo de control: %02X\n", p.getUByte(16));
+        else
+            a.printf("\tCampo de control: %02X %02X\n", p.getUByte(16), p.getUByte(17));
+
+        //int zzz = (int) p.getUByte(16)&0xFF;
+        int zzz = p.getUByte(16) & 192;
+        int www = p.getUByte(16) & 128;
+
+        if(zzz == 192)
+        {
+            a.printf("\tTipo de trama: U-SABME\n");
+        }
+        else if(www == 128)
+        {
+            a.printf("\tTipo de trama: S-");
+            switch(p.getUByte(16) & 12)
+            {
+                case 0:
+                    a.printf("RR\n");
+                    break;
+                case 1:
+                    a.printf("RNR\n");
+                    break;
+                case 2:
+                    a.printf("REJ\n");
+                    break;
+                case 3:
+                    a.printf("SREJ\n");
+                    break;
+            }
+            a.printf("\tN(r): %d", voltearBits(p.getUByte(17)&(128+64+32+16+8+4)));
+        }
+        else
+        {
+            a.printf("\tTipo de trama: I\n");
+            a.printf("\tN(s): %d", voltearBits(p.getUByte(16)&(128+64+32+16+8+4)));
+            a.printf("\tN(r): %d", voltearBits(p.getUByte(17)&(128+64+32+16+8+4)));
+        }
+
+        int xxx = p.getUByte(15)&1;
+        a.printf("\tP/F: [%S]", (xxx == 0)? "P": "F");
+    }
+    static int voltearBits(int o)
+    {
+        int orig = o, tmp1, fin = 0, i;
+        for(i = 7; i > 0; i--)
+        {
+            tmp1 = orig & 1;
+            tmp1 <<= i;
+            fin = tmp1 | fin;
+            orig >>= 1;
+        }
+        return fin;
+    }
+}

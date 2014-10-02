@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (elemento1, elemento2*)>
+	<!ELEMENT elemento1 (#PCDATA)>
+	<!ELEMENT elemento2 (#PCDATA)>
+	
+	<!-- 
+		Los ID no se pueden repetir
+	-->
+	<!ATTLIST elemento2 at1 ID #REQUIRED>
+]>
+<nodoraiz>
+	<elemento1></elemento1>
+	<elemento2 at1="id1"></elemento2>
+	<elemento2 at1="id2"></elemento2>
+</nodoraiz>
+	

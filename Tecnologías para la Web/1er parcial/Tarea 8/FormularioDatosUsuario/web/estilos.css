@@ -1,0 +1,41 @@
+body
+{
+    background-color: #0043FF;
+    font-family: "Monaco";
+    font-size: 18px;
+    padding-left: 100px;
+    padding-top: 40px;
+    color: #FFF;
+}
+br
+{
+    margin-top: 30px;
+}
+input
+{
+    border: 0;
+    border-radius: 5px;
+    color: #0043FF;
+    padding: 6px;
+    width: 25%;
+    text-align: center;
+    /* Para poner una animacion de salida cuando se quita el foco de la caja */
+    transition: ease-out 0.3s;
+    box-shadow: 0 0 0px #FFF;
+}
+input:focus
+{
+    transition: ease-in 0.3s;
+    box-shadow: 0 0 35px #FFF;
+}
+#btn
+{
+    margin-left: 200px;
+}
+img
+{
+    border-radius: 150px;
+    border: 5px solid #FFF;
+    margin: 50px;
+    float: left;
+}

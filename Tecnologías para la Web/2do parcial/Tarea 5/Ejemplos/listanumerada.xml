@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (elemento1, elemento2*)>
+	<!ELEMENT elemento1 (#PCDATA)>
+	<!ELEMENT elemento2 (#PCDATA)>
+	
+	<!-- 
+		Solo acepta valores de la lista enumerada
+	-->
+	<!ATTLIST elemento2 at1 (xxx|yyy|zzz) #REQUIRED>
+]>
+<nodoraiz>
+	<elemento1></elemento1>
+	<elemento2 at1="xxx"></elemento2>
+	<elemento2 at1="yyy"></elemento2>
+	<elemento2 at1="zzz"></elemento2>
+</nodoraiz>
+	

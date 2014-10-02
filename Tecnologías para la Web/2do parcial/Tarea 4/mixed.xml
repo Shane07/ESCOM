@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD interno -->
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (#PCDATA | trama)*> <!-- Debe contener * elementos 'conjunto' where * = 0 o mas ocurrencias-->
+	<!ELEMENT trama (#PCDATA | cabecera | informacion )*>
+	<!ELEMENT cabecera EMPTY>
+	<!ELEMENT informacion EMPTY>
+]>
+
+<!--MIXED: puede contener otras tags XML embebidas -->
+
+<nodoraiz>
+	<trama>
+		<cabecera />
+		<informacion />
+	</trama>
+	<trama>
+		<cabecera />
+		<informacion />
+	</trama>
+</nodoraiz>

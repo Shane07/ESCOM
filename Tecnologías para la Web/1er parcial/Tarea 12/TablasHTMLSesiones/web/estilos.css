@@ -1,0 +1,35 @@
+body
+{
+    background-color: #FFFFE2;
+}
+td
+{
+    border: 1px solid #000;
+    padding: 10px;
+    font-size: 20px;
+}
+#inicio
+{
+    margin-top: 25%;
+    margin-left: 25%;
+}
+.cajaTxt
+{
+    border: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #000;
+    font-size: 20px;
+    padding: 1px;
+    border-bottom: 2px solid #000 !important;
+    text-align: center;
+    width: 80px;
+    height: 20px;
+    background-color: #FFFFE2;
+}
+.boton
+{
+    border: 1px solid #FFF;
+    background-color: #FFFFE2;
+    color: #000;
+}

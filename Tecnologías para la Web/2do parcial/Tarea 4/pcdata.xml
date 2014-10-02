@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD interno -->
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (#PCDATA | parrafo)*> <!-- Debe contener * elementos 'parrafo' where * = 0 o mas ocurrencias-->
+	<!ELEMENT parrafo (#PCDATA)>
+]>
+
+<!-- #PCDATA: puede o no puede contener texto, pero no debe tener llaves <> o tags internas en el elemento; P:parseable -->
+
+<nodoraiz>
+	<parrafo>Hola soy un parrafo</parrafo>
+	<parrafo />
+</nodoraiz>

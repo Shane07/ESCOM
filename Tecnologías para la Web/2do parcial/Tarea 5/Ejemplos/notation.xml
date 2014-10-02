@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (elemento1, elemento2*)>
+	<!ELEMENT elemento1 (#PCDATA)>
+	<!ELEMENT elemento2 (#PCDATA)>
+	
+	<!-- 
+		NOTATION: Utilizados para MIME types
+	-->
+	<!NOTATION imagen SYSTEM "image/png">
+	<!ENTITY entidad1 SYSTEM "http://www.multiaportes.com/wp-content/uploads/2014/01/logo.png" NDATA imagen>
+	
+	<!ATTLIST elemento2 at1 ENTITY #REQUIRED>
+]>
+<nodoraiz>
+	<elemento1></elemento1>
+	<elemento2 at1="entidad1"></elemento2>
+</nodoraiz>
+	

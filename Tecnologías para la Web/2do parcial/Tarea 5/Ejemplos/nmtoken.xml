@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (elemento1, elemento2*)>
+	<!ELEMENT elemento1 (#PCDATA)>
+	<!ELEMENT elemento2 (#PCDATA)>
+	
+	<!-- 
+		NMTOKEN: Pueden contener caracteres alfanumericos, ".", "-", "_", ":"
+	-->
+	<!ATTLIST elemento2 at1 NMTOKEN #REQUIRED>
+]>
+<nodoraiz>
+	<elemento1></elemento1>
+	<elemento2 at1="4ta88.-_:"></elemento2>
+</nodoraiz>
+	

@@ -1,0 +1,1217 @@
+\documentclass[letterpaper]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+\usepackage{float} %Para posicionar imagenes donde se me hinchen las bolas
+
+\usepackage[left=2.0cm,top=2.0cm,right=2.0cm,bottom=2.0cm]{geometry} 
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{figure}
+%\begin{center}
+	\includegraphics[scale=0.15]{ipn.jpg}
+	\hspace{12.5cm}
+	\includegraphics[scale=0.3]{escom.png}
+%\end{center}
+\end{figure}
+
+\begin{center}
+\textbf{\LARGE Instituto Polit\'ecnico Nacional\\} % Acentuando en LaTeX
+\textbf{\Large Escuela Superior de C\'omputo\\}
+\vspace{0.9cm}
+\textbf{\LARGE PROYECTO 1\\}
+\textbf{\Large Calculadora de Matrices\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+	\hspace{3cm}\includegraphics[scale=2.5]{91.jpg}
+\end{figure}
+\end{center}
+
+\begin{center}
+\textbf{\Large Alumno: Ortega Ortu\~no Eder\\} % Acentuando en LaTeX
+\textbf{\Large Grupo: 1CM4\\}
+\textbf{\Large No. de boleta: 2013630328\\}
+\vspace{0.9cm}
+\textbf{\LARGE Algoritmia y Programaci\'on\\}
+\textbf{\Large 2do. Departamental\\}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE INDICE\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\LARGE I. Introducci\'on\\}
+\vspace{0.5cm}
+\textbf{\LARGE II. Estructura del programa\\}
+\hspace{1.5cm}\textbf{\Large Men\'u\\}
+\hspace{1.5cm}\textbf{\Large Entrada de datos\\}
+\hspace{1.5cm}\textbf{\Large Datos aleatorios\\}
+\hspace{1.5cm}\textbf{\Large Nueva operaci\'on\\}
+\hspace{1.5cm}\textbf{\Large Suma\\}
+\hspace{1.5cm}\textbf{\Large Resta\\}
+\hspace{1.5cm}\textbf{\Large Multiplicaci\'on\\}
+\hspace{1.5cm}\textbf{\Large Transpuesta\\}
+\hspace{1.5cm}\textbf{\Large Inversa\\}
+\hspace{1.5cm}\textbf{\Large Determinante\\}
+\vspace{0.5cm}
+\textbf{\LARGE III. C\'odigo fuente\\}
+\vspace{0.5cm}
+\textbf{\LARGE IV. Conclusiones\\}
+\vspace{0.5cm}
+\textbf{\LARGE V. Bibliograf\'ia\\}
+\end{flushleft}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE INTRODUCCION\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large La aplicaci\'on desarrollada tiene como objetivo realizar las operaciones b\'asicas que involucran a una o dos matrices seg\'un sea el caso, logrando una reducci\'on en el tiempo de resoluci\'on de las mismas mediante ciertos algoritmos que automatizan dichas tareas.\\}
+\vspace{0.5cm}
+\textbf{\Large Este programa en particular efect\'ua seis operaciones fundamentales de las matrices tales como la suma, resta, multiplicaci\'on, matriz transpuesta, inversa de una matriz y determinante de una matriz mediante la generaci\'on aleatoria de valores o asignaciones por parte del usuario; todo esto gestionado mediante una sencilla interfaz textual que representa a un men\'u de la aplicaci\'on.\\}
+\vspace{0.5cm}
+\textbf{\Large Las operaciones se ejecutan mediante la entrada de datos num\'ericos por parte del usuario para rellenar las matrices necesarias y efectuar las operaciones previamente indicadas, que a su vez son elegidas mediante la selecci\'on de una letra sin haber diferencia entre min\'usculas o may\'usculas. Cabe destacar que si el usuario introduce una opci\'on incorrecta entonces el programa la detectar\'a y volver\'a a preguntar al usuario tantas veces sea necesario.\\}
+\vspace{0.5cm}
+\textbf{\Large Antes de comenzar, es necesario aclarar que las letras N y M indican la posici\'on de la columna y la fila, respectivamente, en cualquiera de las matrices manejadas tanto en el c\'odigo fuente como en la documentaci\'on del mismo.\\}
+\end{flushleft}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE ESTRUCTURA DEL PROGRAMA\\}
+\vspace{1.0cm}
+\textbf{\LARGE Men\'u\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Esta es la interfaz inicial del programa, la cual representa el men\'u de la aplicaci\'on y mediante el cual es posible efectuar cualquiera de las operaciones matriciales adem\'as de finalizar su ejecuci\'on. Funciona mediante la entrada de un caracter alfab\'etico con el que se escoge la operaci\'on a realizar y que est\'a enfatizada entre corchetes dentro de dicho men\'u. En caso de que se escoja una opci\'on incorrecta, la aplicaci\'on redibujar\'a la interfaz principal hasta que se coloque una opci\'on v\'alida.\\}
+\vspace{0.5cm}
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.7]{array_01.png}
+\end{figure}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE Entrada de datos\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large El programa permite introducir la longitud de las matrices tanto\\
+en filas como en columnas para trabajar con ellas, y bajo ciertas condiciones particulares de la operaci\'on a realizar determina si se puede efectuar o no. A la vez el programa permite introducir los valores de las matrices manualmente.\\}
+\vspace{0.5cm}
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.5]{array_02.png}
+\\
+\\
+\includegraphics[scale=0.5]{array_03.png}
+\end{figure}
+\end{center}
+
+\begin{center}
+\textbf{\LARGE Datos aleatorios\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large De manera an\'aloga, el programa permite generar valores aleatorios para rellenar las matrices mediante una asignaci\'on previa del tama\~no de las matrices y de la selecci\'on donde el programa pregunta c\'omo es que se deben rellenar las matrices: si de manera aleatoria o manualmente, como fue expresado en el subtema ''Entrada de datos''.\\}
+\vspace{0.5cm}
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.5]{array_04.png}
+\\
+\\
+\includegraphics[scale=0.5]{array_05.png}
+\end{figure}
+\end{center}
+
+\begin{center}
+\textbf{\LARGE Nueva operaci\'on\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Al terminar de ejecutar una operaci\'on, mostrar en pantalla el resultado y esperar que el usuario pulse la tecla Intro para continuar, el programa permite seleccionar al usuario si quiere volver a ejecutar la \'ultima operaci\'on efectuada o regresar al men\'u principal para efectuar una nueva operaci\'on matricial. De igual manera que en otros casos, si se introduce una opci\'on inv\'alida, el programa vuelve a preguntar lo mismo hasta que se introduzca un valor v\'alido.\\}
+\vspace{0.5cm}
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.7]{array_14.png}
+\end{figure}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE Suma\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large La suma se realiza siempre y cuando ambas matrices sean de la misma dimensi\'on. La suma de cada uno de sus elementos se logra sumando el elemento de la posici\'on NM del primer arreglo con el elemento de la posici\'on NM del segundo arreglo.\\}
+\end{flushleft}
+
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.4]{array_06.png}
+\end{figure}
+\end{center}
+
+\vspace{-1.0cm}
+
+\begin{center}
+\textbf{\LARGE Resta\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large La resta se realiza siempre y cuando ambas matrices sean de la misma dimensi\'on. La resta de cada uno de sus elementos se logra restando el elemento de la posici\'on NM del primer arreglo al elemento de la posici\'on NM del segundo arreglo.\\}
+\end{flushleft}
+
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.4]{array_07.png}
+\end{figure}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE Multiplicaci\'on\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large La multiplicaci\'on implica que el numero de filas de la primera matriz sea igual al n\'umero de columnas de la segunda matriz. Si se cumple la condici\'on entonces se logra una tercera matriz en la que se almacenan los valores previamente sumados y multiplicados acorde a la regla de multiplicaci\'on de matrices.\\}
+
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.4]{array_08.png}
+\end{figure}
+\end{center}
+
+\vspace{-1.0cm}
+
+\begin{center}
+\textbf{\LARGE Transpuesta\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Dicha operaci\'on solamente consiste en intercambiar filas por columas y viceversa en una misma matriz e imprimirla en pantalla.\\}
+
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.4]{array_09.png}
+\end{figure}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE Inversa\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Esta operaci\'on matricial es la m\'as compleja de todas ya que su procedimiento es bastante largo; permite determinar la matriz inversa de una matriz inicial mediante el m\'etodo de Gauss-Jordan.\\}
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.4]{array_10.png}
+\end{figure}
+\end{center}
+
+\vspace{-1.0cm}
+
+\begin{center}
+\textbf{\LARGE Determinante\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Esta operaci\'on permite calcular la determinante de una matriz mediante un m\'etodo conocido como ''Regla de Sarrus''.\\}
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.4]{array_11.png}
+\end{figure}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE CODIGO FUENTE\\}
+\end{center}
+
+\lstset
+{
+basicstyle=\scriptsize
+}
+\begin{lstlisting}[language=C, numbers=left, showstringspaces=false, tabsize=3]
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
+#define LIMPIAR1 stdout,"\33[2J"
+#define LIMPIAR2 stdout,"\33[1;1H"
+#define INICIO 0
+#define FIN 20
+void suma(void);
+void resta(void);
+void multiplicacion(void);
+void transpuesta(void);
+void inversa(void);
+void determinante(void);
+void menu(void);
+int main(void);
+void limpiar(void)
+{
+	fprintf(LIMPIAR1);
+	fprintf(LIMPIAR2);
+}
+int semilla(void)
+{
+	__asm__ __volatile__("rdtsc");
+}
+int nuevaoperacion(void)
+{
+	char opc;
+	printf("\n\nPulsa Intro para salir");
+	getchar();
+	while(1)
+	{
+		limpiar();
+		printf("\n\n\t[x] Volver al menu\n\t[y] Nueva operacion\n\n\tElige un comando: ");
+		scanf("%c",&opc);
+		opc = tolower(opc);
+		if(opc == 'x' || opc == 'y')
+		{
+			break;
+		}
+	}
+	if(opc == 'x')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+int rellenoaleatorio(void)
+{
+	return rand()%(FIN-INICIO+1)+INICIO;
+}
+void crearmatriz(int *nn, int *mm, int numat, const int func)
+{
+	printf("Matriz %d: \n", numat);
+	printf("\n\tIntroduce la longitud de la columna (vert): ");
+	scanf("%d",nn);
+	printf("\tIntroduce la longitud de la fila (horiz): ");
+	scanf("%d",mm);
+	if((*nn > 500) || (*mm > 500))
+	{
+		limpiar();
+		printf("Las dimensiones de la matriz no pueden exceder de 500 filas o columnas.
+\n\nPulsa Intro para continuar");
+		getchar();
+		getchar();
+		if(func == 1)
+		{
+			printf("SUMITA");
+			getchar();
+			getchar();
+			suma();
+		}
+		else if(func == 2)
+		{
+			printf("RESTITA");
+			getchar();
+			getchar();
+			resta();
+		}
+		else if(func == 3)
+		{
+			multiplicacion();
+		}
+		else if(func == 4)
+		{
+			transpuesta();
+		}
+		else if(func == 5)
+		{
+			inversa();
+		}
+		else if(func == 6)
+		{
+			determinante();
+		}
+	}
+}
+int rellenarmatriz(int numat)
+{
+	char c;
+	while(1)
+	{
+		limpiar();
+		printf("Matriz %d: \n", numat);
+		printf("\n\t [a] Rellenar manualmente la matriz\
+n\t [b] Rellenar con datos aleatorios\n\n\tOpcion: ");
+		scanf("%c",&c);
+		c = tolower(c);
+		if(c == 'a' || c == 'b')
+		{
+			break;
+		}
+	}
+	if(c == 'a')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+void suma(void)
+{
+	int m, n, num, i, j, a1, b1, a2, b2;
+	const int fuu = 1;
+	limpiar();
+	num = 1;
+	crearmatriz(&n, &m, num, fuu);
+	a1 = m;
+	b1 = n;
+	int m1[n][m];
+	if(rellenarmatriz(num))
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				m1[j][i] = rellenoaleatorio();
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	else
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("[%d][%d] = ", j, i);
+				scanf("%d", &m1[j][i]);
+			}
+		}
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	getchar();
+	getchar();
+	limpiar();
+	num = 2;
+	crearmatriz(&n, &m, num, fuu);
+	a2 = m;
+	b2 = n;
+	int m2[n][m];
+	if((a1 != a2) || (b1 != b2))
+	{
+		limpiar();
+		printf("Las matrices m1[%d][%d] y m2[%d][%d] son de distinta dimension.
+\n\nPulsa Intro para asignar nuevas dimensiones", b1, a1, b2, a2);
+		getchar();
+		getchar();
+		suma();
+	}
+	else
+	{
+		if(rellenarmatriz(num))
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					m2[j][i] = rellenoaleatorio();
+					printf("%d\t",m2[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		else
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("[%d][%d] = ", j, i);
+					scanf("%d", &m2[j][i]);
+				}
+			}
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("%d\t",m2[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		getchar();
+		getchar();
+		limpiar();
+		printf("Resultado de la suma\n");
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("%d\t",m1[j][i]+m2[j][i]);
+			}
+			printf("\n");
+		}
+		if(nuevaoperacion())
+		{
+			suma();
+		}
+		else
+		{
+			main();
+		}
+	}
+}
+void resta(void)
+{
+	int m, n, num, i, j, a1, b1, a2, b2;
+	const int fuu = 2;
+	limpiar();
+	num = 1;
+	crearmatriz(&n, &m, num, fuu);
+	a1 = m;
+	b1 = n;
+	int m1[n][m];
+	if(rellenarmatriz(num))
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				m1[j][i] = rellenoaleatorio();
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	else
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("[%d][%d] = ", j, i);
+				scanf("%d", &m1[j][i]);
+			}
+		}
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	getchar();
+	getchar();
+	limpiar();
+	num = 2;
+	crearmatriz(&n, &m, num, fuu);
+	a2 = m;
+	b2 = n;
+	int m2[n][m];
+	if((a1 != a2) || (b1 != b2))
+	{
+		limpiar();
+		printf("Las matrices m1[%d][%d] y m2[%d][%d] son de distinta dimension.
+\n\nPulsa Intro para asignar nuevas dimensiones", b1, a1, b2, a2);
+		getchar();
+		getchar();
+		resta();
+	}
+	else
+	{
+		if(rellenarmatriz(num))
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					m2[j][i] = rellenoaleatorio();
+					printf("%d\t",m2[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		else
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("[%d][%d] = ", j, i);
+					scanf("%d", &m2[j][i]);
+				}
+			}
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("%d\t",m2[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		getchar();
+		getchar();
+		limpiar();
+		printf("Resultado de la resta\n");
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("%d\t",m1[j][i]-m2[j][i]);
+			}
+			printf("\n");
+		}
+		if(nuevaoperacion())
+		{
+			resta();
+		}
+		else
+		{
+			main();
+		}
+	}
+}
+void multiplicacion(void)
+{
+	int m, n, num, i, j, a1, b1, a2, b2;
+	const int fuu = 3;
+	limpiar();
+	num = 1;
+	crearmatriz(&n, &m, num, fuu);
+	a1 = m;
+	b1 = n;
+	int m1[n][m];
+	if(rellenarmatriz(num))
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				m1[j][i] = rellenoaleatorio();
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	else
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("[%d][%d] = ", j, i);
+				scanf("%d", &m1[j][i]);
+			}
+		}
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	getchar();
+	getchar();
+	limpiar();
+	num = 2;
+	crearmatriz(&n, &m, num, fuu);
+	a2 = m;
+	b2 = n;
+	int m2[n][m];
+	if(a1 != b2)
+	{
+		limpiar();
+		printf("Las matrices m1[%d][%d] y m2[%d][%d] no pueden multiplicarse.
+\n\nPulsa Intro para asignar nuevas dimensiones", b1, a1, b2, a2);
+		getchar();
+		getchar();
+		multiplicacion();
+	}
+	else
+	{
+		if(rellenarmatriz(num))
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					m2[j][i] = rellenoaleatorio();
+					printf("%d\t",m2[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		else
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("[%d][%d] = ", j, i);
+					scanf("%d", &m2[j][i]);
+				}
+			}
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("%d\t",m2[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		getchar();
+		getchar();
+		limpiar();
+		printf("Resultado de la multiplicacion\n");
+		int sum, h, res;
+		for(j = 0; j < b1; j++)
+		{
+			for(i = 0; i < a2; i++)
+			{
+				res = 0;
+				for(h = 0; h < a1; h++)
+				{
+					sum = m1[j][h] * m2[h][i];
+					res = sum + res;
+				}
+				printf("%d\t", res);
+			}
+			printf("\n");
+		}
+
+		if(nuevaoperacion())
+		{
+			multiplicacion();
+		}
+		else
+		{
+			main();
+		}
+	}
+}
+void transpuesta(void)
+{
+	int m, n, num, i, j;
+	const int fuu = 4;
+	limpiar();
+	num = 1;
+	crearmatriz(&n, &m, num, fuu);
+	int m1[n][m];
+	if(rellenarmatriz(num))
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				m1[j][i] = rellenoaleatorio();
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	else
+	{
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("[%d][%d] = ", j, i);
+				scanf("%d", &m1[j][i]);
+			}
+		}
+		limpiar();
+		for(j = 0; j < n; j++)
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("%d\t",m1[j][i]);
+			}
+			printf("\n");
+		}
+	}
+	getchar();
+	getchar();
+	limpiar();
+	printf("Matriz transpuesta\n");
+	for(i = 0; i < m; i++)
+	{
+		for(j = 0; j < n; j++)
+		{
+			printf("%d\t", m1[j][i]);
+		}
+		printf("\n");
+	}
+
+	if(nuevaoperacion())
+	{
+		transpuesta();
+	}
+	else
+	{
+		main();
+	}
+}
+void inversa(void)
+{
+	int N, fi, co, num;
+	int m1[100][100], m2[100][100];
+	num = 1;
+	limpiar();
+	printf("Introduce el tamanio de la matriz: ");
+	scanf("%d", &N);
+	if(N > 50 || N < 2)
+	{
+		limpiar();
+		printf("La matriz tiene un tamanio no aceptable.\n\nPulsa Intro para definir una nueva matriz");
+		getchar();
+		getchar();
+		inversa();
+	}
+	else
+	{
+		if(rellenarmatriz(num))
+		{
+			limpiar();
+			for(fi = 0; fi < N; fi++)
+			{
+				for(co = 0 ;co < N;co++)
+				{
+					m1[fi][co] = rellenoaleatorio();
+					printf("%d\t", m1[fi][co]);
+				}
+				printf("\n");
+			}
+		}
+		else
+		{
+			limpiar();
+			for(fi = 0; fi < N; fi++)
+			{
+				for(co = 0 ;co < N;co++)
+				{
+					printf("[%d][%d] = ", fi, co);
+					scanf("%d", &m1[fi][co]);
+				}
+			}
+			limpiar();
+			for(fi = 0; fi < N; fi++)
+			{
+				for(co = 0 ;co < N;co++)
+				{
+					printf("%d\t", m1[fi][co]);
+				}
+				printf("\n");
+			}
+		}
+		getchar();
+		getchar();
+		limpiar();
+		printf("Resultado de la inversa\n");
+		int cont, cont2, cont3, cont4, cont5, cont6, cont7, cont1, colum, zrs, fact, fact2,
+au1, i_d, j_d, auxval, bnd1, bnd0=0, arr[10];
+		for(cont1=0;cont1<N;cont1++)
+		{
+			colum = 0;
+			zrs = 0;
+			if(m1[cont1][colum] == 0)
+			{
+				do
+				{
+					zrs++;
+					colum++;
+				}
+				while(m1[cont1][colum] == 0);
+			}
+			arr[cont1] = zrs;
+		}
+		do
+		{
+			bnd1 = 0;
+			for(cont1 = 0; cont1 < N-1; cont1++)
+			{
+				if(arr[cont1] > arr[cont1+1])
+				{
+					au1 = arr[cont1];
+					arr[cont1]=arr[cont1+1];
+					arr[cont1+1]=au1;
+					for(cont7=0;cont7<N;cont7++)
+					{
+						auxval=m1[cont1][cont7];
+						m1[cont1][cont7]=m1[cont1+1][cont7];
+						m1[cont1+1][cont7]=auxval;
+						auxval=m2[cont1][cont7];
+						m2[cont1][cont7]=m2[cont1+1][cont7];
+						m2[cont1+1][cont7]=auxval;
+					}
+					bnd1=1;
+				}
+			}
+		}
+		while(bnd1==1);
+		for(i_d=0;i_d<50;i_d++)
+		{
+			for(j_d=0;j_d<50;j_d++)
+			{
+				if(i_d==j_d) 
+				{
+					m2[i_d][j_d]=1;
+				}
+				else
+				{
+					m2[i_d][j_d]=0;
+				}
+			}
+		}
+		for(cont=0;cont<N;cont++)
+		{
+			for(cont2=0;cont2<N;cont2++)
+			{
+				if(m1[cont][cont2]!=0)
+				{
+					if(m1[cont][cont2]!=1)
+					{
+							fact = pow(m1[cont][cont2],-1);
+							for(cont3=0;cont3<N;cont3++)
+							{
+								m1[cont][cont3]=(m1[cont][cont3])*fact;
+								m2[cont][cont3]=(m2[cont][cont3])*fact;
+							}
+					}
+					for(cont4=0;cont4<cont;cont4++)
+					{
+						fact2 = (m1[cont4][cont2])*(-1);
+						for(cont6=0;cont6<N;cont6++)
+						{
+							m1[cont4][cont6]=(m1[cont4][cont6])+((m1[cont][cont6])*fact2);
+							m2[cont4][cont6]=(m2[cont4][cont6])+((m2[cont][cont6])*fact2);
+						}
+					}
+					for(cont5=cont2+1;cont5<N;cont5++)
+					{
+						fact2 = (m1[cont5][cont2])*(-1);
+						for(cont6=0;cont6<N;cont6++)
+						{
+							m1[cont5][cont6]=(m1[cont5][cont6])+((m1[cont][cont6])*fact2);
+							m2[cont5][cont6]=(m2[cont5][cont6])+((m2[cont][cont6])*fact2);
+						}
+					}
+					break;
+				}
+			}
+		}
+		for(cont=0;cont<N;cont++)
+		{
+			for(cont2=0;cont2<N;cont2++)
+			{
+				if(cont==cont2)
+				{
+					if(m1[cont][cont2]!=1) 
+					{
+						bnd0=1;
+					}
+				}
+				else
+				{
+					if(m1[cont][cont2]!=0)
+					{
+						bnd0=1;
+					}
+				}
+			}
+		}
+		if(bnd0==1)
+		{
+			printf("\n\nLa matriz no tiene inversa\n\n");
+		}
+		else
+		{
+			for(cont=0;cont<N;cont++)
+			{
+				for(cont2=0;cont2<N;cont2++)
+				{
+					printf("%d\t",m2[cont][cont2]);
+				}
+				printf("\n");
+			}
+		}
+		if(nuevaoperacion())
+		{
+			inversa();
+		}
+		else
+		{
+			main();
+		}
+	}
+}
+void determinante(void)
+{
+	int m, n, num, i, j, aux, sum, res;
+	const int fuu = 6;
+	limpiar();
+	num = 1;
+	crearmatriz(&n, &m, num, fuu);
+	int m1[n][m], m2[n+2][m+2];
+	if(n != m)
+	{
+		limpiar();
+		printf("La matriz no es cuadrada.\n\nPulsa Intro para definir una nueva matriz");
+		getchar();
+		getchar();
+		determinante();
+	}
+	else if((n > 3) || (m > 3))
+	{
+		limpiar();
+		printf("La matriz es demasiado grande.\n\nPulsa Intro para definir una nueva matriz");
+		getchar();
+		getchar();
+		determinante();
+	}
+	else
+	{
+		if(rellenarmatriz(num))
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					m1[j][i] = rellenoaleatorio();
+					printf("%d\t",m1[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		else
+		{
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("[%d][%d] = ", j, i);
+					scanf("%d", &m1[j][i]);
+				}
+			}
+			limpiar();
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m; i++)
+				{
+					printf("%d\t",m1[j][i]);
+				}
+				printf("\n");
+			}
+		}
+		getchar();
+		getchar();
+		limpiar();
+		printf("Resultado de la determinante\n");
+		if(n == 1 && m == 1)
+		{
+			printf("La determinante 1x1 es: %d\n", m1[0][0]);
+		}
+		else if(n == 2 && m == 2)
+		{
+			printf("La determinante 2x2 es: %d\n", (m1[0][0]*m1[1][1])-(m1[1][0]*m1[0][1]));
+		}
+		else
+		{
+			for(j = 0; j < n; j++)
+			{
+				for(i = 0; i < m+2; i++)
+				{
+					m2[j][i] = m1[j][i];
+					if(i == m)
+					{
+						aux = 0;
+						m2[j][i] = m1[j][aux];
+					}
+					else if(i > m)
+					{
+						aux = 1;
+						m2[j][i] = m1[j][aux];
+					}
+					printf("%d\t", m2[j][i]);
+				}
+				printf("\n");
+			}
+			int subtot1 = 0, subtot2 = 0, total;
+			for(j = 0; j <= 2; j += 2)
+			{
+				for(i = 0; i < 3; i++)
+				{
+					if(j == 0)
+					{
+						sum = m2[j][i] * m2[j+1][i+1] * m2[j+2][i+2];
+						subtot1 = subtot1 + sum;
+					}
+					else
+					{
+						res = m2[j][i] * m2[j-1][i+1] * m2[j-2][i+2];
+						subtot2 = subtot2 + res;
+					}
+				}
+			}
+			total = subtot1 - subtot2;
+			printf("\nDeterminante = %d\n", total);
+		}
+		if(nuevaoperacion())
+		{
+			determinante();
+		}
+		else
+		{
+			main();
+		}
+	}
+}
+void menu(void)
+{
+	char o;
+	limpiar();
+	printf("\t\t\t\bCalculadora de matrices\n\n\t\t\tOrtega O. Eder - 1CM4\n\n\n");
+	printf("\t [a] Suma\n\t [b] Resta\n\t [c] Multiplicacion\n\t [d] Transpuesta
+\n\t [e] Inversa\n\t [f] Determinante\n\n\t [g] Salir\n\n\tOpcion: ");
+	scanf("%c",&o);
+	while(getchar()!='\n'); // Limpiar buffer linux
+	o = tolower(o);
+	switch(o)
+	{
+		case 'a':
+			suma();
+			break;
+		case 'b':
+			resta();
+			break;
+		case 'c':
+			multiplicacion();
+			break;
+		case 'd':
+			transpuesta();
+			break;
+		case 'e':
+			inversa();
+			break;
+		case 'f':
+			determinante();
+			break;
+		case 'g':
+			exit(0);
+			break;
+		default:
+			menu();
+	}
+	menu();
+}
+int main()
+{
+	srand(semilla());
+	menu();
+	return 0;
+}
+\end{lstlisting}
+\clearpage
+
+\begin{center}
+\textbf{\LARGE CONCLUSIONES\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Para el desarrollo de este programa se manejaron matrices, funciones con paso de par\'ametros por valor y referencia mediante el uso de punteros, manejo cuidadoso de bucles y jerarquizaci\'on adecuada de las funciones en el programa.\\}
+\vspace{0.5cm}
+\textbf{\Large Por lo tanto esta aplicaci\'on permite trabajar con los valores de matrices para resolver sistemas de ecuaciones lineales, que es una de sus principales aplicaciones.\\}
+\vspace{2.0cm}
+\end{flushleft}
+
+\begin{center}
+\textbf{\LARGE BIBLIOGRAFIA\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Aguilar, Arturo. Matem\'aticas Simplificadas. Segunda edici\'on. Editorial Pearson Educaci\'on, M\'exico, 2009\\}
+\end{flushleft}
+
+
+\clearpage
+
+\thispagestyle{empty}
+\end{document}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (elemento1, elemento2*)>
+	<!ELEMENT elemento1 (#PCDATA)>
+	<!ELEMENT elemento2 (#PCDATA)>
+	
+	<!-- 
+		Referencia a un ID existente
+	-->
+	<!ATTLIST elemento2 at1 ID #REQUIRED>
+	<!ATTLIST elemento2 at2 IDREF #IMPLIED>
+]>
+<nodoraiz>
+	<elemento1></elemento1>
+	<elemento2 at1="id1"></elemento2>
+	<elemento2 at1="gato" at2="id1"></elemento2>
+</nodoraiz>
+	

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Es well-formed y tambien valido -->
+<!DOCTYPE raiz
+[
+	<!ELEMENT raiz (elemento1)>
+	<!ELEMENT elemento1 (#PCDATA)>
+]>
+<raiz>
+	<elemento1></elemento1>
+</raiz>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- Por Ortega Ortuno Eder -->
+<html>
+    <head>
+        <title>Ejemplo de Servlets y HTML5</title>
+        <style type="text/css">
+            body
+            {
+                background-color: #E00052;
+                font-family: "Arial";
+                color: #FFF;
+            }
+            header, footer
+            {
+                text-align: center;
+            }
+            h2
+            {
+                color: #FFF;
+                font-size: 38px;
+            }
+            section
+            {
+                margin: 80px;
+            }
+            form
+            {
+                text-align: center;
+            }
+            input
+            {
+                border: 0;
+                border-radius: 5px;
+                font-size: 25px;
+                color: #E00052;
+                padding: 8px;
+                width: 40%;
+                text-align: center;
+                /* Para poner una animacion de salida cuando se quita el foco de la caja */
+                transition: ease-out 0.3s;
+                box-shadow: 0 0 0px #FFF;
+            }
+            input:focus
+            {
+                transition: ease-in 0.3s;
+                box-shadow: 0 0 25px #FFF;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h2>Ejemplo de servlets y HTML5</h2>
+        </header>
+        <section>
+            <form action="http://localhost:8080/xdd/EjemploServlet" method="POST"><input type="text" name="cualquiertexto"></form>
+        </section>
+        <footer>
+            Por <strong>Eder Ortega Ortu&ntilde;o</strong> | <ins>multiaportes.com</ins>
+        </footer>
+    </body>
+</html>

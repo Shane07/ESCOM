@@ -1,0 +1,46 @@
+            body
+            {
+                background-color: #E00052;
+                font-family: "Arial";
+                color: #FFF;
+            }
+            header, footer
+            {
+                text-align: center;
+            }
+            h2
+            {
+                color: #FFF;
+                font-size: 38px;
+            }
+            section
+            {
+                margin: 80px;
+                color: #FFF;
+                text-shadow: 0 2px 3px #FFF;
+                font-size: 45px;
+                text-align: center;
+                font-variant: small-caps;
+            }
+            form
+            {
+                text-align: center;
+            }
+            input
+            {
+                border: 0;
+                border-radius: 5px;
+                font-size: 25px;
+                color: #E00052;
+                padding: 8px;
+                width: 40%;
+                text-align: center;
+                /* Para poner una animacion de salida cuando se quita el foco de la caja */
+                transition: ease-out 0.3s;
+                box-shadow: 0 0 0px #FFF;
+            }
+            input:focus
+            {
+                transition: ease-in 0.3s;
+                box-shadow: 0 0 25px #FFF;
+            }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (elemento1*, elemento2+)>
+	<!ELEMENT elemento1 (#PCDATA)>
+	<!ELEMENT elemento2 (#PCDATA)>
+	
+	<!--
+		CDATA: Admite algunos caracteres especiales como # y &amp; y otros>
+
+		"valor_default": atributo con valor por default - <elemento2 at1></elemento2>
+		#REQUIRED: atributo obligatorio
+		#IMPLIED: atributo opcional
+		#FIXED: atributo con valor fijo
+	-->
+	<!ATTLIST elemento2 at1 CDATA #REQUIRED>
+	<!ATTLIST elemento2 at2 CDATA #IMPLIED>
+	<!ATTLIST elemento2 at3 CDATA #FIXED "55">
+]>
+<nodoraiz>
+	<elemento1></elemento1>
+	<elemento2 at1="x#d&amp;"></elemento2>
+	<elemento2 at1="xd" at2="xxx"></elemento2>
+	<elemento2 at1="xd" at2="xxx" at3="55"></elemento2>
+</nodoraiz>
+	

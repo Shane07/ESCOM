@@ -1,0 +1,340 @@
+\documentclass[letterpaper]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage[spanish]{babel}
+\usepackage{float} %Para posicionar imagenes donde se me hinchen las bolas
+\usepackage{amsfonts} % Para simbolos numeros reales, enteros, etc
+\usepackage{hyperref} % Para URLs
+
+\usepackage[left=2.0cm,top=2.0cm,right=2.0cm,bottom=2.0cm]{geometry} 
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{figure}
+%\begin{center}
+	\includegraphics[scale=0.15]{ipn.jpg}
+	\hspace{12.5cm}
+	\includegraphics[scale=0.3]{escom.png}
+%\end{center}
+\end{figure}
+
+\begin{center}
+\textbf{\LARGE Instituto Polit\'ecnico Nacional\\} % Acentuando en LaTeX
+\textbf{\Large Escuela Superior de C\'omputo\\}
+\vspace{0.9cm}
+\textbf{\LARGE PROYECTO 2\\}
+\textbf{\Large Secuencia Fibonacci\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+	\hspace{3cm}\includegraphics[scale=1]{92.jpg}
+\end{figure}
+\end{center}
+
+\begin{center}
+\textbf{\Large Alumno: Ortega Ortu\~no Eder\\} % Acentuando en LaTeX
+\textbf{\Large Grupo: 1CM4\\}
+\textbf{\Large No. de boleta: 2013630328\\}
+\vspace{0.9cm}
+\textbf{\LARGE Algoritmia y Programaci\'on\\}
+\textbf{\Large 2do. Departamental\\}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE INDICE\\}
+\vspace{1.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\LARGE I. Introducci\'on\\}
+\vspace{0.5cm}
+\textbf{\LARGE II. Estructura del programa\\}
+\hspace{1.5cm}\textbf{\Large Inicio\\}
+\hspace{1.5cm}\textbf{\Large F\'ormula de serie de potencias\\}
+\hspace{1.5cm}\textbf{\Large Volcado a un archivo\\}
+\hspace{1.5cm}\textbf{\Large Generando el diezmil\'esimo elemento de la secuencia\\}
+\hspace{1.5cm}\textbf{\Large Generando el cienmil\'esimo elemento de la secuencia\\}
+\hspace{1.5cm}\textbf{\Large Generando el millon\'esimo elemento de la secuencia\\}
+\hspace{1.5cm}\textbf{\Large Extra: Instalaci\'on de la librer\'ia GMP\\}
+\vspace{0.5cm}
+\textbf{\LARGE III. C\'odigo fuente\\}
+\vspace{0.5cm}
+\textbf{\LARGE IV. Conclusiones\\}
+\vspace{0.5cm}
+\textbf{\LARGE V. Bibliograf\'ia\\}
+\end{flushleft}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE INTRODUCCION\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Esta aplicaci\'on permite desarrollar mediante un m\'etodo conocido como ''Serie de Potencias'' la secuencia Fibonacci haciendo uso de una f\'ormula inclu\'ida m\'as adelante.\\}
+\vspace{0.5cm}
+\textbf{\Large Dicha secuencia es una progresi\'on num\'erica que consiste en un n\'umero generado por la suma de los dos n\'umeros anteriores que a su vez fueron calculados por el mismo m\'etodo; considerando que la serie comienza su numeraci\'on desde el n\'umero 0 y el 1.\\}
+\vspace{0.5cm}
+\textbf{\Large Una de las curiosidades de la misma secuencia es que al dividir un n\'umero de la misma entre el anterior (tambi\'en perteneciente a la misma secuencia), se obtiene como resultado al N\'umero o Raz\'on \'Aurea, el cual tiene propiedades interesantes e incluso es bien visto est\'eticamente dentro del arte y otras ciencias relacionadas.\\}
+\vspace{0.5cm}
+\textbf{\Large El valor de la Raz\'on \'Aurea es un n\'umero irracional y es aproximadamente igual a:\\}
+\begin{center}
+\vspace{0.5cm}
+\textbf{\huge $\Phi = \frac{1 + \sqrt{5}}{2} \approx 1,6180339887...$}
+\end{center}
+\textbf{\Large \\Se hace especial \'enfasis en este n\'umero irracional porque con ello podemos checar si los \'ultimos n\'umeros generado por el programa pertenecen a la secuencia, dividi\'endolos tal y como se mencionaba en el p\'arrafo anterior.\\}
+\vspace{0.5cm}
+\textbf{\Large Debido a que la secuencia Fibonacci es infinita y pertenece a $\mathbb{Z}$ (conjunto de los n\'umeros enteros), se hace uso de una libreria especial llamada ''GNU Multiple Precision Arithmetic Library'' \'o GMP, la cual nos permite trabajar con operaciones de n\'umeros demasiado grandes y a la vez estableciendo el nivel de precisi\'on deseado, algo que con los tipos de datos convencionales en C no se puede lograr tan f\'acilmente. Tambi\'en es necesario mencionar que dicha librer\'ia maneja sus propios tipos de datos y funciones, aunque admite conversi\'on de datos y funciones t\'ipicas de C.\\}
+\end{flushleft}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE ESTRUCTURA DEL PROGRAMA\\}
+\vspace{1.0cm}
+\textbf{\LARGE Inicio\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large El programa solicita al n\'umero del elemento que se desea calcular, haciendo tambi\'en el c\'alculo de los elementos anteriores. Naturalmente,\\ conforme es mayor el n\'umero del elemento tambi\'en crece el tiempo de c\'alculo para cada uno de los elementos anteriores.\\}
+\vspace{0.5cm}
+\end{flushleft}
+
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.7]{array_12.png}
+\end{figure}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE F\'ormula de serie de potencias\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large La siguiente f\'ormula es aquella que utiliza el m\'etodo de la Serie de Potencias para generar los elementos de la Secuencia Fibonacci. La caracter\'istica principal de dicha f\'ormula es que no requiere haber generado previamente los elementos anteriores de la secuencia, ya que con s\'olo sustituir la variable $n$ y efectuar las operaciones de manera jer\'arquica, se obtiene el n\'umero deseado.\\}
+\vspace{0.5cm}
+\end{flushleft}
+\begin{center}
+\textbf{\huge $f_n=\frac1{\sqrt5}\left(\frac{1+\sqrt5}2\right)^n-\frac1{\sqrt5}\left(\frac{1-\sqrt5}2\right)^n$\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{center}
+\textbf{\LARGE Volcado a un archivo\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Debido a que el programa no puede mostrar n\'umeros demasiado grandes en la consola, los almacena en un fichero de texto llamado ''fibonacci.txt'', en el cual pueden verse posteriormente haciendo uso de un editor de texto plano como Notepad, Notepad++, Gedit, etc.\\}
+\vspace{0.5cm}
+
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.4]{array_13.png}
+\end{figure}
+\end{center}
+
+\clearpage
+
+\begin{center}
+\textbf{\LARGE Generando el diezmil\'esimo elemento de la secuencia\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Como el elemento deseado es 10 000 entonces introduciremos dicho n\'umero al programa para que efect\'ue las operaciones debidas. Luego, checamos en el archivo si se generaron los diez mil elementos.\\}
+
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.35]{array_16.png}
+\end{figure}
+\end{center}
+
+\vspace{-1.0cm}
+
+\begin{center}
+\textbf{\LARGE Generando el cienmil\'esimo elemento de la secuencia\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Como el elemento deseado es 100 000 entonces introduciremos dicho n\'umero al programa para que efect\'ue las operaciones debidas. Luego, checamos en el archivo si se generaron los cien mil elementos.\\}
+
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.35]{array_17.png}
+\end{figure}
+\end{center}
+
+\vspace{-1.0cm}
+
+\begin{center}
+\textbf{\LARGE Generando el millon\'esimo elemento de la secuencia\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Como el elemento deseado es 1 000 000 entonces introduciremos dicho n\'umero al programa para que efect\'ue las operaciones debidas. Luego, checamos en el archivo si se generaron el mill\'on de elementos.\\}
+\end{flushleft}
+\begin{center}
+\begin{figure}[H] %Para posicionar imagenes donde se me hinchen las bolas [param H mayuscula]
+\includegraphics[scale=0.35]{array_18.png}
+\end{figure}
+\end{center}
+
+\vspace{-1.0cm}
+
+\begin{center}
+\textbf{\LARGE Extra: Instalaci\'on de la librer\'ia GMP\\}
+\vspace{0.5cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Para la instalaci\'on de dicha librer\'ia primero hay que descargar la versi\'on m\'as reciente de la misma desde el sitio del proyecto y descomprimirla, posteriormente hay que ubicarse en la ruta donde se descomprimi\'o utilizando la Terminal y el comando ''cd'' (Change Directory).\\}
+\vspace{0.5cm}
+\textbf{\Large Una vez ubicados en aquella ruta, hay que escribir ''./configure'', esperar a que termine, ejecutar ''make'', igualmente esperar y finalmente ejecutar ''sudo make install'' para realizar la instalaci\'on de la librer\'ia en nuestra distro Linux.\\}
+\vspace{0.5cm}
+\textbf{\Large Simplemente a la hora de compilar un archivo que involucre a esta biblioteca, es necesario compilarlo en consola con la \'orden ''gcc -o PROGRAMA PROGRAMA.c -lgmp'' (sustituyendo por el nombre del programa y el archivo final a generar); o si se utiliza un IDE como Geany, Code::Blocks o cualquier otro, tan s\'olo es necesario a\~nadir el par\'ametro ''-lgmp'' al linker.\\}
+\end{flushleft}
+
+\begin{center}
+\vspace{-0.7cm}
+\textbf{\LARGE CODIGO FUENTE\\}
+\end{center}
+
+\lstset
+{
+basicstyle=\scriptsize
+}
+\begin{lstlisting}[language=C, numbers=left, showstringspaces=false, tabsize=3]
+#include <stdio.h>
+#include <stdlib.h>
+#include <gmp.h>
+typedef mpf_t flotante;
+void raizcuadcinco(flotante *r)
+{
+     mpf_set_d(*r, 5.0);
+     mpf_sqrt(*r, *r);
+}
+void inversa_raizcuadcinco(flotante *i, flotante *r)
+{
+     mpf_ui_div(*i, 1, *r);
+}
+void suma(flotante *s, flotante *r)
+{
+     mpf_add_ui(*s, *r, 1);
+     mpf_div_ui(*s, *s, 2);
+}
+void resta(flotante *res, flotante *r)
+{
+     mpf_ui_sub(*res, 1, *r);
+     mpf_div_ui(*res, *res, 2);
+}
+void potencia(flotante *p, flotante *x, int exp)
+{
+     mpf_pow_ui(*p, *x, exp);
+}
+
+void multiplicacion(flotante *m, flotante *y, flotante *i)
+{
+     mpf_mul(*m, *y, *i);
+}
+void restafinal(flotante *n, flotante a, flotante b)
+{
+     mpf_sub(*n, a, b);
+     mpf_ceil(*n, *n);
+}
+void generar(unsigned long int elem, FILE *arc)
+{
+     flotante raiz2_5, inv_r2_5, s1, r1, p1, p2, m1, m2, num;
+     mpf_set_default_prec(16384);
+     mpf_init(raiz2_5);
+     mpf_init(inv_r2_5);
+     mpf_init(s1);
+     mpf_init(r1);
+     mpf_init(p1);
+     mpf_init(p2);
+     mpf_init(m1);
+     mpf_init(m2);
+     mpf_init(num);
+     raizcuadcinco(&raiz2_5);
+     inversa_raizcuadcinco(&inv_r2_5, &raiz2_5);
+     suma(&s1, &raiz2_5);
+     resta(&r1, &raiz2_5);
+     potencia(&p1, &s1, elem);
+     potencia(&p2, &r1, elem);
+     multiplicacion(&m1, &p1, &inv_r2_5);
+     multiplicacion(&m2, &p2, &inv_r2_5);
+     restafinal(&num, m1, m2);
+     gmp_printf("%.*Ff\n", 0, num);
+     gmp_fprintf(arc, "%.*Ff\n", 0, num);
+     mpf_clear(raiz2_5);
+     mpf_clear(inv_r2_5);
+     mpf_clear(s1);
+     mpf_clear(r1);
+     mpf_clear(p1);
+     mpf_clear(p2);
+     mpf_clear(m1);
+     mpf_clear(m2);
+     mpf_clear(num);
+}
+int main()
+{
+     unsigned long int elementos, c; FILE *arch;
+     printf("\t\tSecuencia Fibonacci [Serie de Potencias]\n\n\t\t\tOrtega O. Eder - 1CM4\n\n\n");
+     printf("Elementos a calcular: "); scanf("%lu",&elementos); printf("\n");
+     arch = fopen("fibonacci.txt","w");
+     for(c = 0; c < elementos; c++) generar(c, arch);
+     fclose(arch); printf("\a\nLos numeros fueron almacenados en \"fibonacci.txt\"");
+     return 0;
+}
+\end{lstlisting}
+\clearpage
+
+\begin{center}
+\textbf{\LARGE CONCLUSIONES\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\Large Se decidi\'o utilizar la librer\'ia GMP ya que los tipos de datos num\'ericos en C no soportan valores muy grandes, y al intentar colocarlos se produc\'ia un desbordamiento de b\'uffer; lo cual tambi\'en puede ocurrir al utilizar GMP si no se especifica previamente la precisi\'on en bits de las variables a crear y utilizar durante la ejecuci\'on del programa.\\}
+\vspace{0.5cm}
+\textbf{\Large Por lo tanto esta aplicaci\'on es eficiente para trabajar con valores de datos demasiado grandes utilizando como ejemplo la Secuencia Fibonacci, donde al final genera un archivo de texto que inclusive puede superar los 200MB de peso.\\}
+\vspace{1.0cm}
+\end{flushleft}
+
+\begin{center}
+\textbf{\LARGE BIBLIOGRAFIA\\}
+\vspace{1.0cm}
+\end{center}
+
+\begin{flushleft}
+\textbf{\large \url{http://en.wikipedia.org/wiki/Fibonacci_number}\\}
+\vspace{0.5cm}
+\textbf{\large \url{http://www.curiosaweb.com/2009/05/la-secuencia-de-fibonacci-en-la-naturaleza/}\\}
+\vspace{0.5cm}
+\textbf{\large \url{http://rt000z8y.eresmas.net/El\%20numero\%20de\%20oro.htm}\\}
+\vspace{0.5cm}
+\textbf{\large Descarga de la librer\'ia GMP: \url{http://gmplib.org/}\\}
+\vspace{0.5cm}
+\textbf{\large Manual de uso de la librer\'ia GMP: \url{http://gmplib.org/manual/}\\}
+\end{flushleft}
+
+\clearpage
+
+\thispagestyle{empty}
+\end{document}

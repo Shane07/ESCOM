@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD interno -->
+<!DOCTYPE nodoraiz [
+	<!ELEMENT nodoraiz (#PCDATA | divisor)*> <!-- Debe contener * elementos 'divisor' where * = 0 o mas ocurrencias-->
+	<!ELEMENT divisor ANY>
+]>
+
+<!-- ANY: puede o no puede contener texto embebido -->
+
+<nodoraiz>
+	<divisor>Hola estoy en un div</divisor>
+	<divisor></divisor>
+	<divisor />
+</nodoraiz>

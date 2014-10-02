@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+    Por Eder Ortega - multiaportes.com
+    Tecnologias para la Web - 2CM4
+-->
+<html>
+    <head>
+        <title>Ejemplo Envolver nodos jQuery DOM - multiaportes.com</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="prueba">
+            multiaportes.com/jqueryDOM
+        </div>
+        
+        <div style="clear: both; margin-bottom: 30px;"></div>
+        <button onclick="envolver()">Envolver: wrap()</button>
+        
+        <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script type="text/javascript">
+            function envolver()
+            {
+                $('#prueba').wrap('<div id="padre" style="border: 1px solid #FF2600"></div>');
+            }
+        </script>
+    </body>
+</html>

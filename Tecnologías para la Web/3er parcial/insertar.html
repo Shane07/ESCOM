@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+    Por Eder Ortega - multiaportes.com
+    Tecnologias para la Web - 2CM4
+-->
+<html>
+    <head>
+        <title>Ejemplo Insertar nodos jQuery DOM - multiaportes.com</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="adentro-inicio">
+            <p>multiaportes.com/jqueryDOM</p>
+        </div>
+        <div id="afuera-final">
+            <p>multiaportes.com/jqueryDOM</p>
+        </div>
+        
+        <div style="clear: both; margin-bottom: 30px;"></div>
+        <button onclick="adentroInicio()">Adentro-inicio: prepend()</button>
+        <button onclick="afueraFinal()">Afuera-final: after()</button>
+        
+        <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script type="text/javascript">
+            function adentroInicio()
+            {
+                $('#adentro-inicio').prepend('<strong>Estoy dentro de un DIV</strong>');
+            }
+            function afueraFinal()
+            {
+                $('#afuera-final').after('<strong>Estoy fuera de un DIV</strong>');
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+void printBin(const int w, char *cd)
+{
+	unsigned int z, c;
+	for(z = 0; z < w; z++)
+	{
+		for(c = 0x80; c > 0; c >>= 1)
+			(c&cd[z])? printf("1") : printf("0");
+		printf("\n");
+	}
+}
+void emisorCRC(void)
+{
+	unsigned int i, j, px = 0x04C11DB7, tmp = 0;
+	unsigned char tramaHex[] = {0x00, 0x02, 0xb3, 0x9c, 0xae, 0xba, 0x00, 0x02, 0xb3, 0x9c, 0xdf, 0x1b, 0x00, 0x03, 0xf0, 0xf0, 0x7f, 0x00, 0x00, 0x00, 0x00}; // 4 ceros = 32 bits agregados para CRC32 (polinomio grado 32)
+
+	printBin(sizeof(tramaHex), tramaHex);//initTmp(&tmp, tramaHex);
+
+	tmp = (tramaHex[0] << 24) | (tramaHex[1] << 16) | (tramaHex[2] << 8) | tramaHex[3];
+	
+	for(i = 0; i < strlen(tramaHex); z++)
+		for(j = 0x80; j > 0; j >>= 1)
+			if(j&tramaHex[i])
+			{
+
+			}
+			else
+			{
+				
+			}
+
+}
+
+int main(int args, char **argv)
+{
+	if(strcmp(argv[1], "--tx") == 0)
+		emisorCRC();
+	else if(strcmp(argv[1], "--rx") == 0)
+		//receptorCRC();
+	else
+		fprintf(stderr, "Argumento desconocido");
+	return 0;
+}

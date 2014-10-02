@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+    Por Eder Ortega - multiaportes.com
+    Tecnologias para la Web - 2CM4
+-->
+<html>
+    <head>
+        <title>Ejemplo Getters/Setters jQuery DOM - multiaportes.com</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="divisor">
+            <p style="color: #FF2600">multiaportes.com/jqueryDOM</p>
+        </div>
+        <span id="ma">texto_inicial</span><!-- 'span' permite agrupar elementos en linea -->
+        
+        <div style="clear: both; margin-bottom: 30px;"></div>
+        <button onclick="showCodigoHTML()">Obtener: html()</button>
+        <button onclick="editarTexto()">Establecer: text()</button>
+        
+        <script type="text/javascript" src="jquery-2.1.1.js"></script>
+        <script type="text/javascript">
+            function showCodigoHTML()
+            {
+                var codigo = $('#divisor').html();
+                alert(codigo);
+            }
+            function editarTexto()
+            {
+                var valor = prompt('Nuevo texto', 'nuevo_texto');
+                $('#ma').text(valor);
+            }
+        </script>
+    </body>
+</html>
