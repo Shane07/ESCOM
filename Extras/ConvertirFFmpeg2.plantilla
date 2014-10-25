@@ -1,0 +1,2 @@
+video1	ignorar #El video se procesara completamente
+video2	00:00 00:02 # El video se recortara $3 segundos desde $2
