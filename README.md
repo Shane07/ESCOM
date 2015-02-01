@@ -4,20 +4,19 @@
 Repositorio personal donde almacenaré prácticas, tareas, scripts y otros ejercicios propios que he hecho durante mi carrera de Ingeniería en Sistemas Computacionales.
 
 ##Lenguajes utilizados
-###Lenguajes de programación
+###Lenguajes de programación y scripting
 - C
 - C++
 - C#
 - Java
 - Assembly
-
-###Lenguajes de scripting
 - Shell Script
 - Batch
 - Python
 - Perl
 - Ruby
 - PHP
+- JavaScript
 
 ###Otros
 - HTML
